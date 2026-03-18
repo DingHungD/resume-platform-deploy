@@ -26,7 +26,7 @@
   ├── resume-platform-frontend/ (前端 UI 介面)
   └── resume-platform-worker/   (異步解析與 Embedding 處理)
 ```
-- [後端詳細配置連結](https://github.com/DingHungD/resume-platform-backend/blob/main/requirements.txt)
+- [後端詳細配置連結]([https://github.com/DingHungD/resume-platform-backend/blob/main/requirements.txt](https://github.com/DingHungD/resume-platform-backend/blob/main/README.md))
 
 - [前端詳細配置連結]()
 
