@@ -23,6 +23,8 @@ services:
   backend:
     build: ../resume-platform-backend
     container_name: resume_backend
+    volumes:
+      - ./uploads:/app/uploads  # 將本地的 uploads 資料夾掛載到 Container 內
     env_file: .env
     depends_on:
       - db
