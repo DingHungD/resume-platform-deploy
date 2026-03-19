@@ -35,14 +35,22 @@ services:
       - resume_network
 
   worker:
-    build: ../resume-platform-worker
+    build: 
+      context: ../resume-platform-worker # 確保路徑正確
+      dockerfile: Dockerfile
     container_name: resume_worker
     env_file: .env
+    volumes:
+      - ../resume-platform-worker:/app
+      - ../resume-platform-backend/uploads:/app/uploads
     depends_on:
       - db
       - redis
     networks:
       - resume_network
+    environment:
+      - PYTHONPATH=/app  
+    command: python -m celery -A app.core.celery_app worker --loglevel=info
 
   frontend:
     build: ../resume-platform-frontend
