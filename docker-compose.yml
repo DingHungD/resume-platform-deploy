@@ -11,7 +11,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./init-db:/docker-entrypoint-initdb.ds
+      - ./init-db:/docker-entrypoint-initdb.d
     networks:
       - resume_network
 
@@ -28,6 +28,8 @@ services:
       - ../resume-platform-backend:/app
       - ../resume-platform-backend/uploads:/app/uploads
     env_file: .env
+    environment:
+      - PYTHONUNBUFFERED=1
     depends_on:
       - db
       - redis
@@ -53,7 +55,12 @@ services:
     command: python -m celery -A app.core.celery_app worker --loglevel=info
 
   frontend:
-    build: ../resume-platform-frontend
+    build: 
+      context: ../resume-platform-frontend
+      args:
+        # 這裡會自動去讀取你目錄下的 .env 檔案
+        - NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
+        - NEXT_PUBLIC_WS_BASE_URL=${NEXT_PUBLIC_WS_BASE_URL}
     container_name: resume_frontend
     networks:
       - resume_network
